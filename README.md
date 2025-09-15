@@ -1,82 +1,85 @@
-## API Data Injection Scripts for Skillioz
-### Description
-This repository contains two Python scripts, JobsInjection.py and CandidateInjection.py, designed to populate the Skillioz test API (https://test-api.skillioz.com) with a large volume of sample data.
+# API Data Injection Scripts for Skillioz
 
-The scripts leverage multithreading to send concurrent API requests, making them efficient tools for stress testing, database seeding, or creating a realistic development environment.
+This repository contains two Python scripts, `JobsInjection.py` and `CandidateInjection.py`, designed to populate the Skillioz test API (`https://test-api.skillioz.com`) with a large volume of sample data.
 
-### Features
-Bulk Data Creation: Generate a specified range of job and candidate records.
+The scripts leverage **multithreading** to send concurrent API requests, making them efficient tools for stress testing, database seeding, or creating a realistic development environment.
 
-Concurrent API Requests: Utilizes ThreadPoolExecutor to send multiple API requests in parallel, significantly speeding up the data injection process.
+---
 
-Dynamic Data Generation: Creates semi-realistic data for each record by randomly selecting from predefined lists of skills, cities, job titles, etc.
+## Features 
 
-Interactive: Prompts the user for necessary inputs like the API authentication token and the desired range of records to create.
+* **Bulk Data Creation**: Generate a specified range of job and candidate records.
+* **Concurrent API Requests**: Utilizes `ThreadPoolExecutor` to send multiple API requests in parallel, significantly speeding up the data injection process.
+* **Dynamic Data Generation**: Creates semi-realistic data for each record by randomly selecting from predefined lists of skills, cities, job titles, etc.
+* **Interactive**: Prompts the user for necessary inputs like the **API authentication token** and the desired range of records to create.
 
-### Prerequisites
+---
+
+## Prerequisites
+
 Before running the scripts, ensure you have the following installed:
 
-Python 3.x
+* Python 3.x
+* The `requests` and `num2words` Python libraries.
 
-The requests and num2words Python libraries.
+---
 
-### Installation
-Clone this repository or download the JobsInjection.py and CandidateInjection.py files.
+## Installation
 
-Install the required Python packages using pip:
+1.  Clone this repository or download the `JobsInjection.py` and `CandidateInjection.py` files.
 
-Bash
+2.  Install the required Python packages using `pip`:
+    ```bash
+    pip install requests num2words
+    ```
 
-pip install requests num2words
-### Usage
-To run the scripts, navigate to the directory containing the files in your terminal and execute them using the python command.
+---
 
-1. To Inject Job Data
-Run the JobsInjection.py script to create multiple job postings.
+## Usage
 
-Bash
+To run the scripts, navigate to their directory in your terminal and execute them using the `python` command.
 
+### To Inject Job Data
+
+Run the `JobsInjection.py` script to create multiple job postings.
+
+```bash
 python JobsInjection.py
-The script will then prompt you for the following information:
 
-Enter token value: Your valid authentication token for the API.
-
-Enter number of threads: Note: This input is currently ignored in the script, which is hardcoded to use 10 threads.
-
-Enter low range: The starting number for the data generation loop (e.g., 1).
-
-Enter high range: The exclusive ending number for the loop (e.g., entering 100 will create records from 1 to 99).
-
-2. To Inject Candidate Data
+To Inject Candidate Data
 Run the CandidateInjection.py script to create multiple candidate profiles.
 
 Bash
 
 python CandidateInjection.py
-This script will ask for the same prompts as the job injection script.
+After running either script, you will be prompted for:
+
+API Token: Your valid authentication token.
+
+Number of Threads: The number of concurrent threads.
+
+Low Range: The starting number for the data generation loop (e.g., 1).
+
+High Range: The exclusive ending number for the loop (e.g., 100 will create records from 1 to 99).
 
 Script Details
 JobsInjection.py
 Endpoint: POST https://test-api.skillioz.com/job/create
 
-Purpose: Creates job postings with randomly generated details.
+Purpose: Creates job postings with randomly generated details like company name, job title, skills, and location.
 
-Payload Format: The script sends the payload as form data (data=...).
-
-Key Generated Fields: category, city, companyName, country, jobLocation, jobTitle, jobType, skillset, yearOfExperience.
+Payload Format: The script sends the payload as form data.
 
 CandidateInjection.py
 Endpoint: POST https://test-api.skillioz.com/candidate/create
 
-Purpose: Creates candidate profiles with randomly generated names, contact information, skills, and professional details.
+Purpose: Creates candidate profiles with random names, contact information, skills, and experience.
 
-Payload Format: The script sends the payload in JSON format (json=...).
+Payload Format: The script sends the payload in JSON format.
 
-Key Generated Fields: name, email, mobileNo, skills, year_of_experience, designation.
+Important Notes ⚠
+API Token: You must provide a valid authentication token for the API requests to be successful.
 
-Important Notes
-API Token: A valid authentication token is required for the API requests to be successful. Invalid tokens will result in authorization errors.
+Hardcoded Thread Count: Both scripts ask for a number of threads but are hardcoded to use a maximum of 10 worker threads. To change the concurrency, you must modify the max_workers=10 value directly in the script files.
 
-Hardcoded Thread Count: Both scripts prompt for a number of threads but are currently hardcoded to use a maximum of 10 worker threads (ThreadPoolExecutor(max_workers=10)). To change the level of concurrency, you must modify this value directly in the script files.
-
-Target Environment: These scripts are specifically configured to target the https://test-api.skillioz.com endpoints.
+Target Environment: These scripts are configured specifically for the https://test-api.skillioz.com endpoint.
