@@ -44,7 +44,8 @@ To run the scripts, navigate to their directory in your terminal and execute the
 Run the `JobsInjection.py` script to create multiple job postings.
 
 ```bash
-python JobsInjection.py
+python JobsInjection.py 
+```
 
 To Inject Candidate Data
 Run the CandidateInjection.py script to create multiple candidate profiles.
